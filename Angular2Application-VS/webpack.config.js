@@ -44,7 +44,9 @@ var serverBundleConfig = merge(sharedConfig, {
     entry: { 'main-server': './ClientApp/boot-server.ts' },
     output: {
         libraryTarget: 'commonjs',
-        path: path.join(__dirname, './ClientApp/dist')
+        //path: path.join(__dirname, './ClientApp/dist')
+         path: path.join(__dirname, './wwwroot/dist'),
+
     },
     target: 'node',
     devtool: 'inline-source-map',
