@@ -1,7 +1,7 @@
 var isDevBuild = process.argv.indexOf('--env.prod') < 0;
 var path = require('path');
 var HtmlWebpackPlugin = require('webpack-html-plugin');
-
+//var DefinePlugin = require('defined');
 var webpack = require('webpack');
 var nodeExternals = require('webpack-node-externals');
 var merge = require('webpack-merge');
@@ -27,7 +27,7 @@ var sharedConfig = {
 var clientBundleConfig = merge(sharedConfig, {
     entry: { 'boot': './src/boot.ts' },
     output: { path: path.join(__dirname, './wwwroot'), filename:'scripts/app.js' },
-    devtool: isDevBuild ? 'inline-source-map' : null,
+    //devtool: isDevBuild ? 'inline-source-map' : null,
     plugins: [
         new webpack.DllReferencePlugin({
             context: __dirname,
@@ -38,10 +38,20 @@ var clientBundleConfig = merge(sharedConfig, {
             template: './wwwroot/index-vendor.html',
             inject: 'body',
         }),
-        new webpack.DefinePlugin({
-            'Environment': JSON.stringify('Development'),
-            'API_URL': JSON.stringify('http://localhost.com')
-        })
+        /**
+        * Plugin: DefinePlugin
+        * Description: Define free variables.
+        * Useful for having development builds with debug logging or adding global constants.
+        *
+        * Environment helpers
+        *
+        * See: https://webpack.github.io/docs/list-of-plugins.html#defineplugin
+        */
+       // NOTE: when adding more properties, make sure you include them in custom-typings.d.ts
+       new webpack.DefinePlugin({
+           'Environment': JSON.stringify('Production'),
+           'API_URL': JSON.stringify('http://production-site.com')
+       })
     ].concat(isDevBuild ? [] : [
         // Plugins that apply in production builds only
         new webpack.optimize.OccurrenceOrderPlugin(),

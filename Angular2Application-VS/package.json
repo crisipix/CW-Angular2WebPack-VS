@@ -8,7 +8,9 @@
     "webpack": "webpack --config webpack.config.js",
     "webpack:vendor": "webpack --config webpack.config.vendor.js",
     "webpack:all": "npm run clean && npm run webpack:vendor && npm run webpack",
-    "start:dev": "start http://localhost:5000 && dotnet run --environment=\"Development\""
+    "webpack:prod": "npm run clean && npm run webpack:vendor && webpack --config webpack.config.prod.js --env.prod",
+    "start": "start http://localhost:5000 && dotnet run --environment=\"Development\"",
+    "start:prod": "start http://localhost:5000 && dotnet run --environment=\"Production\""
   },
   "dependencies": {
     "@angular/common": "2.1.0",
